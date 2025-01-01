@@ -55,15 +55,13 @@ jobs:
         file: dev/build/Dockerfile
         push: true
         tags: |
-          requarks/wiki:canary
-          requarks/wiki:canary-${{ env.REL_VERSION_STRICT }}
-          ghcr.io/requarks/wiki:canary
-          ghcr.io/requarks/wiki:canary-${{ env.REL_VERSION_STRICT }}
+          ghcr.io/Titanomyrma/wiki-test:canary
+          ghcr.io/Titanomyrma/wiki-test:canary-${{ env.REL_VERSION_STRICT }}
 
     - name: Extract compiled files
       run: |
         mkdir -p _dist
-        docker create --name wiki ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
+        docker create --name wiki ghcr.io/Titanomyrma/wiki-test:canary-$REL_VERSION_STRICT
         docker cp wiki:/wiki _dist
         docker rm wiki
         rm _dist/wiki/config.yml
@@ -175,7 +173,7 @@ jobs:
         push: true
         tags: |
           requarks/wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
-          ghcr.io/requarks/wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
+          ghcr.io/Titanomyrma/wiki-test:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
 
   windows:
     name: Windows Build
@@ -252,7 +250,7 @@ jobs:
         echo "Creating the manifests..."
 
         docker manifest create requarks/wiki:beta-$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:beta-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/requarks/wiki:beta-$REL_VERSION_STRICT ghcr.io/Titanomyrma/wiki-test:canary-$REL_VERSION_STRICT ghcr.io/Titanomyrma/wiki-test:canary-arm64-$REL_VERSION_STRICT
 
         echo "Pushing the manifests..."
 
@@ -305,10 +303,10 @@ jobs:
         docker manifest create requarks/wiki:$MAJOR requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
         docker manifest create requarks/wiki:$MAJORMINOR requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
         docker manifest create requarks/wiki:latest requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$MAJOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$MAJORMINOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:latest ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/requarks/wiki:$REL_VERSION_STRICT ghcr.io/Titanomyrma/wiki-test:canary-$REL_VERSION_STRICT ghcr.io/Titanomyrma/wiki-test:canary-arm64-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/requarks/wiki:$MAJOR ghcr.io/Titanomyrma/wiki-test:canary-$REL_VERSION_STRICT ghcr.io/Titanomyrma/wiki-test:canary-arm64-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/requarks/wiki:$MAJORMINOR ghcr.io/Titanomyrma/wiki-test:canary-$REL_VERSION_STRICT ghcr.io/Titanomyrma/wiki-test:canary-arm64-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/requarks/wiki:latest ghcr.io/Titanomyrma/wiki-test:canary-$REL_VERSION_STRICT ghcr.io/Titanomyrma/wiki-test:canary-arm64-$REL_VERSION_STRICT
 
         echo "Pushing the manifests..."
 
