@@ -29,8 +29,8 @@ jobs:
 
     - name: pull and push Docker images
       run:
-	  docker pull -a postgres:15-alpine
-          docker push -a ghcr.io/titanomyrma/wiki-test/postgres:canary postgres:15-alpine
+	docker pull -a postgres:15-alpine
+        docker push -a ghcr.io/titanomyrma/wiki-test/postgres:canary postgres:15-alpine
 
   build:
     name: Build
