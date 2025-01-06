@@ -29,8 +29,9 @@ jobs:
 
       - name: pull and push Docker images
         run: |
-          docker pull -a postgres:15-alpine
-          docker push -a ghcr.io/titanomyrma/wiki-test/postgres:canary postgres:15-alpine
+          docker pull --platform=linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x postgres:17.2-bookworm
+          docker manifest inspect postgres:17.2-bookworm
+          docker push -a ghcr.io/titanomyrma/wiki-test/postgres:canary postgres:17.2-bookworm
 
   build:
     name: Build
