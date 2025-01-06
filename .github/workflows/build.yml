@@ -27,15 +27,10 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: dev/build/postgres/Dockerfile
-        push: true
-        tags: |
-          ghcr.io/titanomyrma/wiki-test/postgres:canary
-          ghcr.io/titanomyrma/wiki-test/postgres:canary-${{ env.REL_VERSION_STRICT }}
+    - name: pull and push Docker images
+      run:
+	  docker pull -a postgres:15-alpine
+          docker push -a ghcr.io/titanomyrma/wiki-test/postgres:canary
 
   build:
     name: Build
