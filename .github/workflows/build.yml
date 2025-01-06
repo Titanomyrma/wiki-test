@@ -31,7 +31,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: dev/build/Dockerfile
+        file: dev/build/postgres/Dockerfile
         push: true
         tags: |
           ghcr.io/titanomyrma/wiki-test/postgres:canary
