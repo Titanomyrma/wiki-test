@@ -20,6 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -27,11 +33,16 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: pull and push Docker images
-        run: |
-          docker pull --platform=linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x postgres:17.2-bookworm
-          docker manifest inspect postgres:17.2-bookworm
-          docker push -a ghcr.io/titanomyrma/wiki-test/postgres:canary postgres:17.2-bookworm
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: dev/build/postgres/Dockerfile
+          platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+          provenance: false
+          push: true
+          tags: |
+            ghcr.io/titanomyrma/wiki-test/postgres:canary
 
   build:
     name: Build
